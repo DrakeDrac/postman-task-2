@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: bitspilani
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: hehe1234
+    volumes:
+      - db_data:/var/lib/postgresql
+    ports:
+      - "5432:5432" 
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: "host=db port=5432 user=admin password=hehe1234 dbname=bitspilani sslmode=disable"
+    depends_on:
+      - db 
+
+volumes:
+  db_data: # Define the volume for database persistence
