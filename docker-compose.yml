@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   db:
     image: postgres:latest
@@ -10,7 +9,12 @@ services:
     volumes:
       - db_data:/var/lib/postgresql
     ports:
-      - "5432:5432" 
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d bitspilani"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   app:
     build: .
@@ -18,8 +22,12 @@ services:
       - "8080:8080"
     environment:
       DATABASE_URL: "host=db port=5432 user=admin password=hehe1234 dbname=bitspilani sslmode=disable"
+    volumes:
+      - ./config.yaml:/app/config.yaml
+    working_dir: /app
     depends_on:
-      - db 
+      db:
+        condition: service_healthy 
 
 volumes:
   db_data: # Define the volume for database persistence

@@ -1,0 +1,20 @@
+database:
+  url: "host=db port=5432 user=admin password=hehe1234 dbname=bitspilani sslmode=disable"
+
+server:
+  port: "8080"
+
+jwt:
+  secret_key: "mojkey"
+
+admin:
+  email: "admin@bitspilani.ac.in"
+  password: "admin123"
+
+email:
+  smtp_host: "smtp.gmail.com"
+  smtp_port: "587"
+  smtp_username: "email"
+  smtp_password: "emailpassword"
+  from_email: "email"
+
